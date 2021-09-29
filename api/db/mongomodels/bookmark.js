@@ -4,12 +4,12 @@ const mongoose = require ('mongoose');
 const BookmarkSchema = new mongoose.Schema({
     _Id: mongoose.Schema.Types.ObjectId,
     userID: mongoose.Schema.Types.ObjectId,
-    title: String,
-    url: String,
-    dateCreated: String,
-    dateUpdated: String,      //not relevant
-    tags: Array,
-    private: Number
+    title: {type: String, required: true},
+    url: {type: String, required: true},
+    dateCreated: {type: Date, default: mongoose.now()},
+    dateUpdated: {type: Date, required: false},      //not relevant
+    tags: {type: Array, required: false},
+    private: {type: Number, required: false, default: 0}
     //others 
   });
 
