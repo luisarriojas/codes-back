@@ -1,31 +1,45 @@
 const express = require ('express');
 const router = express.Router();
+const mongoose = require('mongoose');
 
+const mongoService = require('../db/mongoService');
+const Bookmark = require('../db/mongomodels/bookmark');
 
 
 //This is /bookmarks already
 
-
 router.get('/', function (req, res) {
-    res.send('Bookmarks')
+    //res.send('I will get Bookmarks (coming soon)')
+
+    Bookmark.find().exec().then(results=>{
+        res.status(200).json({results})
+    }
+
+    ).catch()
+    
+
 })
   
 
 router.post('/', function (req, res) {
     
-    const bookmark = {
-        // now this is parsed from json-parser (express)
-        name: req.body.name,
-        price: req.body.price
-    }
-    
-    res.status(200).json({
-        message: 'wrong!',
-        createdbookmark: bookmark
-    })
+    const bookmark = new Bookmark ({
+        _id: new mongoose.Types.ObjectId(),
+        title: req.body.title,
+        url: req.body.url
+    });
+    bookmark.save().then(bm=>{
+            res.status(200).json({
+                message: 'Bookmark Created!',
+                createdbookmark: bm._id
+            }) 
+        }
+    ).catch(
+        res.status(500).json({
+            message: 'Server Error'
+        }) 
+    )
     console.log(bookmark);
-    
-
 })
 
 router.get('/:bookmarkId', function (req, res) {
