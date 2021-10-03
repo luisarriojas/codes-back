@@ -27,7 +27,9 @@ router.post('/', function (req, res) {
     const user = new User ({
         _id: new mongoose.Types.ObjectId(),
         walletNo: req.body.walletNo,
-        nickname: req.body.nickname
+        nickname: req.body.nickname,
+        email: req.body.email,
+        password: req.body.password
     });
     user.save().then(result => {
         console.log(result);
