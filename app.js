@@ -2,6 +2,8 @@
 const express=require('express');
 const app = express();
 var cors = require('cors');
+require('dotenv').config()
+
 
 const bookmarkRoutes = require('./api/routes/bookmarks');
 const userRoutes = require('./api/routes/users');
@@ -9,8 +11,10 @@ const tagRoutes = require('./api/routes/tags');
 
 const mongoose = require ('mongoose');
 
-// pwd: qi7wPDxp5uuTleqw
-mongoose.connect("mongodb+srv://app-user:qi7wPDxp5uuTleqw@maincodescluster.c1s93.mongodb.net/codesdb?retryWrites=true&w=majority",{}).catch(err=>{ console.log(err)});
+
+mongoPwd=process.env.mongoPwd;
+
+mongoose.connect("mongodb+srv://app-user:"+mongoPwd+"@maincodescluster.c1s93.mongodb.net/codesdb?retryWrites=true&w=majority",{}).catch(err=>{ console.log(err)});
 
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
